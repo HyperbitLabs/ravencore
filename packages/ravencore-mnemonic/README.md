@@ -1,12 +1,12 @@
 # Ravencore Mnemonics
 
 [![NPM Package](https://img.shields.io/npm/v/ravencore-mnemonic.svg?style=flat-square)](https://www.npmjs.org/package/ravencore-mnemonic)
-[![Build Status](https://img.shields.io/travis/hyperbitlabs/ravencore-mnemonic.svg?branch=master&style=flat-square)](https://travis-ci.org/hyperbitlabs/ravencore-mnemonic)
-[![Coverage Status](https://img.shields.io/coveralls/hyperbitlabs/ravencore-mnemonic.svg?style=flat-square)](https://coveralls.io/r/hyperbitlabs/ravencore-mnemonic)
+[![Build Status](https://img.shields.io/travis/ravencore-mnemonic.svg?branch=master&style=flat-square)](https://travis-ci.org/ravencore-mnemonic)
+[![Coverage Status](https://img.shields.io/coveralls/ravencore-mnemonic.svg?style=flat-square)](https://coveralls.io/r/ravencore-mnemonic)
 
-**A module for [hyperraven](https://github.com/hyperbitlabs/hyperraven) that implements Mnemonic code for generating deterministic keys.**
+**A Hyberbit module for [ravencore](https://github.com/hyperbitlabs/ravencore) that implements Mnemonic code for generating deterministic keys.**
 
-A reimplementation of Bitpay's [bitcore-mnemonic](https://github.com/bitpay/bitcore/blob/master/packages/bitcore-mnemonic/README.md) for Ravencoin written in TypeScript.
+A derivative of Bitpay's [bitcore-mnemonic](https://github.com/bitpay/bitcore/blob/master/packages/bitcore-mnemonic/README.md) for Ravencoin written in TypeScript. See [license](./LICENSE.md).
 
 ## Getting Started
 
@@ -21,6 +21,15 @@ yarn add ravencore-mnemonic;
 ## Examples
 
 See [EXAMPLES.md](./EXAMPLES.md) for developer guides.
+
+## Available Mnemonic Languages
+* Chinese
+* English
+* French
+* Italian
+* Japanese
+* Korean
+* Spanish
 
 ## Contributing
 

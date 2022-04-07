@@ -19,12 +19,23 @@ export type MnemonicType = {
   _mnemonic: (x: number, y: string[]) => string;
   fromSeed: (x: Buffer, y: string[]) => never | MnemonicType;
   isValid: (x: string, y: string[] | null) => boolean;
-  phrase: any;
+  phrase: string | undefined;
+  Words: Record<string, string[]>;
   prototype?: any;
 };
 
+/**
+ * 
+ * @example
+ * // returns natal hada sutil año sólido papel jamón combate aula flota ver esfera...
+ * const code = new Mnemonic(Mnemonic.Words.SPANISH);
+ * code.toString();
+ * 
+ * @param data 
+ * @param wordlist 
+ * @returns 
+ */
 export const Mnemonic: MnemonicType = function(
-  this: any,
   data: Data,
   wordlist: WordList = null
 ) {
@@ -39,7 +50,7 @@ export const Mnemonic: MnemonicType = function(
 
   let seed: Buffer | undefined;
   let ent: number = DEFAULT_ENT;
-  let phrase: any;
+  let phrase: string | undefined;
 
   if (Buffer.isBuffer(data)) {
     seed = data;
@@ -96,6 +107,12 @@ export const Mnemonic: MnemonicType = function(
   });
 };
 
+/**
+ * Internal function to detect the wordlist used to generate the mnemonic.
+ *
+ * @param {string | undefined} mnemonic - The mnemonic string
+ * @returns {string[] | null} the wordlist or null
+ */
 Mnemonic._getDictionary = function(mnemonic?: string): string[] | null {
   if (!mnemonic) {
     return null;
@@ -113,6 +130,13 @@ Mnemonic._getDictionary = function(mnemonic?: string): string[] | null {
   return null;
 };
 
+/**
+ * Internal function to check if a mnemonic belongs to a wordlist.
+ *
+ * @param {string} mnemonic - The mnemonic string
+ * @param {string} wordlist - The wordlist
+ * @returns {boolean}
+ */
 Mnemonic._belongsToWordlist = function(
   mnemonic: string,
   wordlist: string[]
@@ -127,6 +151,13 @@ Mnemonic._belongsToWordlist = function(
   return true;
 };
 
+/**
+ * Internal function to create checksum of entropy
+ *
+ * @param {Buffer} entropy
+ * @returns {string} Checksum of entropy length / 32
+ * @private Checksum
+ */
 Mnemonic._entropyChecksum = function(entropy: Buffer): string {
   var hash = Hash.sha256(entropy);
   var bits = entropy.length * 8;
@@ -144,11 +175,25 @@ Mnemonic._entropyChecksum = function(entropy: Buffer): string {
   return checksum;
 };
 
+/**
+ * Internal function to generate a random mnemonic
+ *
+ * @param {number} ENT - Entropy size, defaults to 128
+ * @param {string[]} wordlist - Array of words to generate the mnemonic
+ * @returns {string} Mnemonic string
+ */
 Mnemonic._mnemonic = function(ENT: number, wordlist: string[]): string {
   var buf = Random.getRandomBuffer(ENT / 8);
   return this._entropy2mnemonic(buf, wordlist);
 };
 
+/**
+ * Internal function to generate mnemonic based on entropy
+ *
+ * @param {Buffer} entropy - Entropy buffer
+ * @param {string[]} wordlist - Array of words to generate the mnemonic
+ * @returns {string} Mnemonic string
+ */
 Mnemonic._entropy2mnemonic = function(
   entropy: Buffer,
   wordlist: string[]
@@ -183,8 +228,21 @@ Mnemonic._entropy2mnemonic = function(
   return ret;
 };
 
-Mnemonic.phrase = null;
+Mnemonic.phrase = undefined;
 
+Mnemonic.Words = words;
+
+/**
+ * Return a boolean if the mnemonic is valid
+ *
+ * @example
+ * // returns true
+ * const valid = Mnemonic.isValid('lab rescue lunch elbow recall phrase perfect donkey biology guess moment husband');
+ *
+ * @param {string} mnemonic - The mnemonic string
+ * @param {string[]} wordlist - The wordlist used
+ * @returns {boolean}
+ */
 Mnemonic.isValid = function(
   mnemonic: string,
   wordlist: string[] | null
@@ -222,6 +280,12 @@ Mnemonic.isValid = function(
   return expected_hash_bits === hash_bits;
 };
 
+/**
+ * Generate a seed based on the mnemonic and optional passphrase.
+ * 
+ * @param {string} - Passphrase
+ * @returns {Buffer}
+ */
 Mnemonic.prototype.toSeed = function(passphrase: string = ''): Buffer {
   return pbkdf2(
     unorm.nfkd(this.phrase),
@@ -231,6 +295,13 @@ Mnemonic.prototype.toSeed = function(passphrase: string = ''): Buffer {
   );
 };
 
+/**
+ * Generate a mnemonic object from seed and wordlist.
+ *
+ * @param {Buffer} seed
+ * @param {string[]} wordlist - Array of words to generate the mnemonic
+ * @returns {Mnemonic}
+ */
 Mnemonic.fromSeed = function(
   seed: Buffer,
   wordlist: string[]
@@ -243,6 +314,15 @@ Mnemonic.fromSeed = function(
   return new (Mnemonic as any)(seed, wordlist);
 };
 
+/**
+ *
+ * Generates a HD Private Key from a mnemonic.
+ * Optionally receive a passphrase and ravencoin network.
+ *
+ * @param {string} passphrase - Passphrase
+ * @param {Network | string | number} network - The network: 'livenet' or 'testnet'
+ * @returns {HDPrivateKey}
+ */
 Mnemonic.prototype.toHDPrivateKey = function(
   passphrase: string,
   network: unknown
@@ -251,10 +331,20 @@ Mnemonic.prototype.toHDPrivateKey = function(
   return ravencore.HDPrivateKey.fromSeed(seed, network);
 };
 
+/**
+ * Return a the string representation of the mnemonic
+ *
+ * @returns {string} Mnemonic
+ */
 Mnemonic.prototype.toString = function(): string {
   return this.phrase;
 };
 
+/**
+ * Return a string formatted for the console
+ *
+ * @returns {string} Mnemonic
+ */
 Mnemonic.prototype.inspect = function(): string {
   return `<Mnemonic: ${this.toString()} >`;
 };
