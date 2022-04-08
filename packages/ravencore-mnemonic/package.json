@@ -32,6 +32,11 @@
   },
   "name": "ravencore-mnemonic",
   "author": "Hyperbit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HyperbitLabs/ravencore",
+    "directory": "packages/ravencore-mnemonic"
+  },
   "module": "dist/ravencore-mnemonic.esm.js",
   "size-limit": [
     {
@@ -57,5 +62,8 @@
   },
   "peerDependencies": {
     "ravencore-lib": "^1.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
