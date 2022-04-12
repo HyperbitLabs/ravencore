@@ -6,8 +6,6 @@
 
 **A Hyberbit module for [ravencore](https://github.com/hyperbitlabs/ravencore) that implements Mnemonic code for generating deterministic keys.**
 
-A derivative of Bitpay's [bitcore-mnemonic](https://github.com/bitpay/bitcore/blob/master/packages/bitcore-mnemonic/README.md) for Ravencoin written in TypeScript. See [license](./LICENSE.md).
-
 ## Getting Started
 
 ```sh
