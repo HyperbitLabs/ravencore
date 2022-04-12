@@ -1,4 +1,4 @@
-# Ravencore Mnemonics
+# Ravencore Mnemonic
 
 [![NPM Package](https://img.shields.io/npm/v/ravencore-mnemonic.svg?style=flat-square)](https://www.npmjs.org/package/ravencore-mnemonic)
 [![Build Status](https://img.shields.io/travis/ravencore-mnemonic.svg?branch=master&style=flat-square)](https://travis-ci.org/ravencore-mnemonic)
