@@ -29,6 +29,7 @@ See [EXAMPLES.md](./EXAMPLES.md) for developer guides.
 * Italian
 * Japanese
 * Korean
+* Portuguese
 * Spanish
 
 ## Contributing
